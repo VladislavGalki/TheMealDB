@@ -11,7 +11,7 @@ enum Constants {
     
     enum MealAPIMethods {
         static let getPopularMeal = "https://themealdb.com/api/json/v1/1/random.php"
-        //static let authorize = "https://id.twitch.tv/oauth2/token"
+        static let getMealByCategory = "https://themealdb.com/api/json/v1/1/filter.php"
     }
     
 }

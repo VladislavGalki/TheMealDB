@@ -10,6 +10,6 @@ import Foundation
 typealias GetMealAPIResponse = Result<GetMealsResponse, NetworkServiceError>
 
 protocol MealNetworkServiceProtocol {
-    func getPopularMeal(after cursor: String?, completion: @escaping (GetMealAPIResponse) -> Void)
-    //func loadImage(imageUrl: String, completion: @escaping (Data?) -> Void)
+    func getPopularMeal(completion: @escaping (GetMealAPIResponse) -> Void)
+    func getMealByCategory(with category: String , completion: @escaping (GetMealAPIResponse) -> Void)
 }

@@ -16,6 +16,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         let mealListView = ListMealVIewController()
         let menuView = MenuViewController()
+        let networkService = MealNetworkService()
+        let presenter = ListMealPresenter(view: mealListView, networkService: networkService)
+        mealListView.presenter = presenter
+        
         window?.rootViewController = ContainerViewController(mealListView: mealListView, menuView: menuView)
         window?.makeKeyAndVisible()
         return true

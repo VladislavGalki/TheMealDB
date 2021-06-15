@@ -11,6 +11,8 @@ final class MealTableViewCell: UITableViewCell {
     
     static let identifier = "MealCell"
     
+    static let labelFont = UIFont(name: "Kefa", size: 20)!
+    
     lazy var backView: UIView = {
         let backView = UIView(frame: .zero)
         backView.backgroundColor = UIColor(red: 255/255, green: 201/255, blue: 201/255, alpha: 1)
@@ -27,8 +29,9 @@ final class MealTableViewCell: UITableViewCell {
     
     lazy var nameMealLabel: UILabel = {
         let nameMealLabel = UILabel()
+        nameMealLabel.numberOfLines = 0
         nameMealLabel.textAlignment = .left
-        nameMealLabel.font = UIFont(name: "Kefa", size: 20)
+        nameMealLabel.font = Self.labelFont
         nameMealLabel.text = "Arrabiata"
         nameMealLabel.translatesAutoresizingMaskIntoConstraints = false
         return nameMealLabel
@@ -52,9 +55,11 @@ final class MealTableViewCell: UITableViewCell {
         contentView.backgroundColor = UIColor.white
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
+    override class var requiresConstraintBasedLayout: Bool {
+        return true
+    }
+    
+    override func updateConstraints() {
         let backwardViewConstraint = [
             backView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
             backView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
@@ -66,15 +71,25 @@ final class MealTableViewCell: UITableViewCell {
             imageMeal.leadingAnchor.constraint(equalTo: backView.leadingAnchor, constant: 10),
             imageMeal.bottomAnchor.constraint(equalTo: backView.bottomAnchor, constant: -8),
             
-            nameMealLabel.topAnchor.constraint(equalTo: backView.topAnchor, constant: 16),
+            nameMealLabel.topAnchor.constraint(equalTo: backView.topAnchor, constant: 14),
             nameMealLabel.leadingAnchor.constraint(equalTo: imageMeal.trailingAnchor, constant: 10),
+            nameMealLabel.trailingAnchor.constraint(lessThanOrEqualTo: backView.trailingAnchor, constant: -5),
         ]
         
         NSLayoutConstraint.activate(backwardViewConstraint)
         imageMeal.layer.cornerRadius = 10
+        super.updateConstraints()
     }
     
-//    func configureCell(model: ) {
-//
-//    }
+    static func heighForCell (_ text: String, width: CGFloat) -> CGFloat {
+        
+        let attributedString = NSAttributedString(string: text, attributes: [NSAttributedString.Key.font: labelFont])
+        let rect = attributedString.boundingRect(with:
+                                                    CGSize(width: width, height: .greatestFiniteMagnitude),
+                                                 options: .usesLineFragmentOrigin,
+                                                 context: nil)
+        return ceil(rect.size.height + (rect.height + 10))
+    }
 }
+
+

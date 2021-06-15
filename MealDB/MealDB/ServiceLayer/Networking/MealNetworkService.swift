@@ -21,9 +21,33 @@ extension MealNetworkService: MealNetworkServiceProtocol {
     
     typealias Handler = (Data?, URLResponse?, Error?) -> Void
     
-    func getPopularMeal(after cursor: String?, completion: @escaping (GetMealAPIResponse) -> Void) {
+    func getPopularMeal(completion: @escaping (GetMealAPIResponse) -> Void) {
         
         let components = URLComponents(string: Constants.MealAPIMethods.getPopularMeal)
+        guard let url = components?.url else { completion(.failure(.unknownError)); return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        
+        let handler: Handler = { rawData, response, taskError in
+            do {
+                let data = try self.httpResponse(data: rawData, response: response)
+                let response = self.decodeJson(type: GetMealsResponse.self, from: data)
+                if let response = response {
+                    completion(.success(response))
+                }
+            } catch let error as NetworkServiceError {
+                completion(.failure(error))
+            } catch {
+                completion(.failure(.unknownError))
+            }
+        }
+        session.dataTask(with: request, completionHandler: handler).resume()
+    }
+    
+    func getMealByCategory(with category: String, completion: @escaping (GetMealAPIResponse) -> Void) {
+        
+        var components = URLComponents(string: Constants.MealAPIMethods.getMealByCategory)
+        components?.queryItems = [URLQueryItem(name: "c", value: category)]
         guard let url = components?.url else { completion(.failure(.unknownError)); return }
         var request = URLRequest(url: url)
         request.httpMethod = "GET"

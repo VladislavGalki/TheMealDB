@@ -16,8 +16,7 @@ final class ListMealVIewController: UIViewController {
     // MARK: - Dependencies
     
     weak var delegate: MealVIewControllerDelegate?
-    
-    var it: [GetMealsDataResponse] = []
+    var presenter: ListMealPresenterProtocol!
     
     // MARK: - UI
     
@@ -41,13 +40,13 @@ final class ListMealVIewController: UIViewController {
         buttonMenu.translatesAutoresizingMaskIntoConstraints = false
         return buttonMenu
     }()
-
+    
     lazy var titleLabel: UILabel = {
         let titleLabel = UILabel(frame: .zero)
         titleLabel.font = UIFont(name: "Kefa", size: 30)
         titleLabel.textColor = .black
         titleLabel.textAlignment = .left
-        titleLabel.text = "Popular dishes"
+        titleLabel.text = selectedCategory
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         return titleLabel
     }()
@@ -71,11 +70,11 @@ final class ListMealVIewController: UIViewController {
     
     // MARK: - Internal Properties
     
-    let network = MealNetworkService()
-    
-    var selectedCategory: String = String() {
+    var selectedCategory: String = "Popular dishes" {
         willSet {
-            prepareForFetchData(name: newValue)
+            if selectedCategory != newValue {
+                presenter.getMealByCategory(for: newValue)
+            }
         }
     }
     
@@ -89,10 +88,7 @@ final class ListMealVIewController: UIViewController {
         headerView.addSubview(titleLabel)
         view.addSubview(tableView)
         view.addSubview(backView)
-        network.getPopularMeal(after: "") { result in
-            self.process(result)
-        }
-       
+        presenter.getPopularMeal()
     }
     
     override func viewWillLayoutSubviews() {
@@ -105,7 +101,7 @@ final class ListMealVIewController: UIViewController {
             headerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             headerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             headerView.topAnchor.constraint(equalTo: view.topAnchor, constant: -20),
-           
+            
             buttonMenu.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             buttonMenu.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
             buttonMenu.bottomAnchor.constraint(equalTo: titleLabel.topAnchor, constant: -15),
@@ -131,18 +127,6 @@ final class ListMealVIewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
-    private func process (_ response: GetMealAPIResponse) {
-        DispatchQueue.main.async {
-            switch response {
-            case .success(let data):
-                self.it.append(contentsOf: data.meals)
-                self.tableView.reloadData()
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
-    }
-    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
@@ -164,10 +148,29 @@ final class ListMealVIewController: UIViewController {
     }
 }
 
+//MARK: - ListMealViewProtocol
+
+extension ListMealVIewController: ListMealViewProtocol {
+    func succes() {
+        titleLabel.text = selectedCategory
+        tableView.reloadData()
+    }
+    
+    func failure(error: Error) {
+        print(error.localizedDescription)
+    }
+}
+
 //MARK: - UITableViewDelegate
+
 extension ListMealVIewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        80
+        let item = presenter.mealModel[indexPath.row]
+        var height = MealTableViewCell.heighForCell(item.strMeal, width: tableView.frame.width)
+        if height < 80 {
+            height = 80
+        }
+        return height
     }
 }
 
@@ -176,12 +179,12 @@ extension ListMealVIewController: UITableViewDelegate {
 extension ListMealVIewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return it.count
+        return presenter.mealModel.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MealTableViewCell.identifier, for: indexPath) as? MealTableViewCell else { return UITableViewCell() }
-        cell.nameMealLabel.text = it[indexPath.row].strMeal
+        cell.nameMealLabel.text = presenter.mealModel[indexPath.row].strMeal
         return cell
     }
 }

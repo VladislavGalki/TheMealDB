@@ -24,6 +24,7 @@
 		04772ADE26780382006891F6 /* NetworkServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04772ADD26780382006891F6 /* NetworkServiceError.swift */; };
 		04772AE026780439006891F6 /* MealNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04772ADF26780439006891F6 /* MealNetworkService.swift */; };
 		04772AE3267805C4006891F6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04772AE2267805C4006891F6 /* Constants.swift */; };
+		04772AE526795531006891F6 /* ListMealPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04772AE426795531006891F6 /* ListMealPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 		04772ADD26780382006891F6 /* NetworkServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceError.swift; sourceTree = "<group>"; };
 		04772ADF26780439006891F6 /* MealNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealNetworkService.swift; sourceTree = "<group>"; };
 		04772AE2267805C4006891F6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		04772AE426795531006891F6 /* ListMealPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListMealPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,6 +180,7 @@
 		04772AD1267795A0006891F6 /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
+				04772AE426795531006891F6 /* ListMealPresenter.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -371,6 +374,7 @@
 				04772AC626755E84006891F6 /* MealTableViewCell.swift in Sources */,
 				04772AE026780439006891F6 /* MealNetworkService.swift in Sources */,
 				04772AC02674B039006891F6 /* MenuViewController.swift in Sources */,
+				04772AE526795531006891F6 /* ListMealPresenter.swift in Sources */,
 				04772AE3267805C4006891F6 /* Constants.swift in Sources */,
 				04772ADE26780382006891F6 /* NetworkServiceError.swift in Sources */,
 				04772AC426753A81006891F6 /* TopHeaderView.swift in Sources */,

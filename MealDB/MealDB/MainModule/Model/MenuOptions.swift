@@ -24,7 +24,7 @@ enum MenuOptions: Int, CustomStringConvertible, CaseIterable {
         case .Beef:
             return "Beef"
         case .Chiken:
-            return "Chiken"
+            return "Chicken"
         case .Pork:
             return "Pork"
         case .Pasta:

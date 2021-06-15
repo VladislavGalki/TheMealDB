@@ -95,10 +95,10 @@ extension ContainerViewController: MealVIewControllerDelegate {
             animateStatusBar()
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut) {
                 self.centerController.view.frame.origin.x = 0
-                self.mealView.backView.isHidden = true
             } completion: { [weak self] done in
                 if done {
                     self?.menuState = .closed
+                    self?.mealView.backView.isHidden = true
                     guard let selectedCategory = category else { return }
                     self?.mealView.selectedCategory = selectedCategory.description
                 }
