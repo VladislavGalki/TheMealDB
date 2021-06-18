@@ -5,6 +5,7 @@
 //  Created by Владислав Галкин on 15.06.2021.
 //
 
+import UIKit.UIImage
 import Foundation
 
 final class MealNetworkService {
@@ -63,6 +64,24 @@ extension MealNetworkService: MealNetworkServiceProtocol {
                 completion(.failure(error))
             } catch {
                 completion(.failure(.unknownError))
+            }
+        }
+        session.dataTask(with: request, completionHandler: handler).resume()
+    }
+    
+    func downloadImageFromUrl(from url: String?, completion: @escaping (UIImage?) -> ()) {
+        
+        guard let imageUrl = url, let url = URL(string: imageUrl) else { return }
+        let request = URLRequest(url: url)
+        
+        let handler: Handler = { rawData, response, taskError in
+            do {
+                let data = try self.httpResponse(data: rawData, response: response)
+                if let image = UIImage(data: data) {
+                    completion(image)
+                }
+            } catch {
+                print("other error")
             }
         }
         session.dataTask(with: request, completionHandler: handler).resume()

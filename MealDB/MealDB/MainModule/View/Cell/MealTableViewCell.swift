@@ -11,6 +11,12 @@ final class MealTableViewCell: UITableViewCell {
     
     static let identifier = "MealCell"
     
+    lazy var loadingIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView()
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
+    }()
+    
     static let labelFont = UIFont(name: "Kefa", size: 20)!
     
     lazy var backView: UIView = {
@@ -23,6 +29,9 @@ final class MealTableViewCell: UITableViewCell {
     
     lazy var imageMeal: UIImageView = {
         let imageMeal = UIImageView()
+        imageMeal.contentMode = .scaleAspectFill
+        imageMeal.clipsToBounds = true
+        imageMeal.backgroundColor = backView.backgroundColor
         imageMeal.translatesAutoresizingMaskIntoConstraints = false
         return imageMeal
     }()
@@ -41,6 +50,7 @@ final class MealTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.backgroundColor = .clear
         backView.addSubview(nameMealLabel)
+        imageMeal.addSubview(loadingIndicator)
         backView.addSubview(imageMeal)
         contentView.addSubview(backView)
         
@@ -71,14 +81,34 @@ final class MealTableViewCell: UITableViewCell {
             imageMeal.leadingAnchor.constraint(equalTo: backView.leadingAnchor, constant: 10),
             imageMeal.bottomAnchor.constraint(equalTo: backView.bottomAnchor, constant: -8),
             
+            loadingIndicator.leadingAnchor.constraint(equalTo: imageMeal.leadingAnchor, constant: 15),
+            loadingIndicator.topAnchor.constraint(equalTo: imageMeal.topAnchor, constant: 15),
+            
             nameMealLabel.topAnchor.constraint(equalTo: backView.topAnchor, constant: 14),
             nameMealLabel.leadingAnchor.constraint(equalTo: imageMeal.trailingAnchor, constant: 10),
             nameMealLabel.trailingAnchor.constraint(lessThanOrEqualTo: backView.trailingAnchor, constant: -5),
         ]
-        
         NSLayoutConstraint.activate(backwardViewConstraint)
         imageMeal.layer.cornerRadius = 10
+        
         super.updateConstraints()
+    }
+    
+    func updateAppearanceFor(_ image: UIImage?, _ label: String) {
+        DispatchQueue.main.async { [unowned self] in
+            self.displayImage(image, label)
+        }
+    }
+    
+    private func displayImage(_ image: UIImage?, _ mealName: String) {
+        if let _image = image {
+            imageMeal.image = _image
+            nameMealLabel.text = mealName
+            loadingIndicator.stopAnimating()
+        } else {
+            loadingIndicator.startAnimating()
+            imageMeal.image = .none
+        }
     }
     
     static func heighForCell (_ text: String, width: CGFloat) -> CGFloat {

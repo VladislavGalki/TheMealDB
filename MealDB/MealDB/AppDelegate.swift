@@ -14,13 +14,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-        let mealListView = ListMealVIewController()
-        let menuView = MenuViewController()
-        let networkService = MealNetworkService()
-        let presenter = ListMealPresenter(view: mealListView, networkService: networkService)
-        mealListView.presenter = presenter
-        
-        window?.rootViewController = ContainerViewController(mealListView: mealListView, menuView: menuView)
+        let mainController = MealModuleBuilder()
+        window?.rootViewController = mainController.build()
         window?.makeKeyAndVisible()
         return true
     }

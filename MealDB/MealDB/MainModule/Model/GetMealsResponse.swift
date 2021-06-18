@@ -5,7 +5,7 @@
 //  Created by Владислав Галкин on 14.06.2021.
 //
 
-import Foundation
+import UIKit
 
 struct GetMealsResponse: Decodable {
     let meals: [GetMealsDataResponse]

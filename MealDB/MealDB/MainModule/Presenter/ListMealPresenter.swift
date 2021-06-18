@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol ListMealViewProtocol: AnyObject {
     func succes()
@@ -29,6 +30,7 @@ final class ListMealPresenter: ListMealPresenterProtocol {
     init(view: ListMealViewProtocol, networkService: MealNetworkServiceProtocol) {
         self.view = view
         self.networkService = networkService
+        getPopularMeal()
     }
     
     func getPopularMeal() {

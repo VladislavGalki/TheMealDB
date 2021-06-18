@@ -17,6 +17,8 @@ final class ListMealVIewController: UIViewController {
     
     weak var delegate: MealVIewControllerDelegate?
     var presenter: ListMealPresenterProtocol!
+    private lazy var loadingQueue = OperationQueue()
+    private lazy var loadingOperations = [IndexPath : DataLoadOperation]()
     
     // MARK: - UI
     
@@ -64,6 +66,7 @@ final class ListMealVIewController: UIViewController {
         tableView.backgroundColor = view.backgroundColor
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.prefetchDataSource = self
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -88,7 +91,6 @@ final class ListMealVIewController: UIViewController {
         headerView.addSubview(titleLabel)
         view.addSubview(tableView)
         view.addSubview(backView)
-        presenter.getPopularMeal()
     }
     
     override func viewWillLayoutSubviews() {
@@ -134,10 +136,6 @@ final class ListMealVIewController: UIViewController {
     
     // MARK: - Private methods
     
-    private func prepareForFetchData(name: String){
-        print(name)
-    }
-    
     @objc func didTapMenuButton() {
         backView.isHidden = false
         delegate?.didTapMenuButton(category: nil)
@@ -161,6 +159,29 @@ extension ListMealVIewController: ListMealViewProtocol {
     }
 }
 
+
+//MARK: - UITableViewDataSourcePrefetching
+extension ListMealVIewController: UITableViewDataSourcePrefetching{
+    
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        for indexPath in indexPaths {
+            let item = presenter.mealModel[indexPath.row]
+            let dataLoader = DataLoadOperation(url: item.strMealThumb)
+            loadingQueue.addOperation(dataLoader)
+            loadingOperations[indexPath] = dataLoader
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
+        for indexPath in indexPaths {
+            if let dataLoader = loadingOperations[indexPath] {
+                dataLoader.cancel()
+                loadingOperations.removeValue(forKey: indexPath)
+            }
+        }
+    }
+}
+
 //MARK: - UITableViewDelegate
 
 extension ListMealVIewController: UITableViewDelegate {
@@ -171,6 +192,38 @@ extension ListMealVIewController: UITableViewDelegate {
             height = 80
         }
         return height
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        guard let cell = cell as? MealTableViewCell else { return }
+        
+        let item = presenter.mealModel[indexPath.row]
+        
+        let updateCellClosure: (UIImage?) -> () = { [unowned self] (image) in
+            cell.updateAppearanceFor(image, item.strMeal)
+            self.loadingOperations.removeValue(forKey: indexPath)
+        }
+        if let dataLoader = loadingOperations[indexPath] {
+            if let image = dataLoader.image {
+                cell.updateAppearanceFor(image, item.strMeal)
+                loadingOperations.removeValue(forKey: indexPath)
+            } else {
+                dataLoader.loadingCompleteHandler = updateCellClosure
+            }
+        } else {
+            let dataLoader = DataLoadOperation(url: item.strMealThumb)
+            dataLoader.loadingCompleteHandler = updateCellClosure
+            loadingQueue.addOperation(dataLoader)
+            loadingOperations[indexPath] = dataLoader
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let dataLoader = loadingOperations[indexPath] {
+            dataLoader.cancel()
+            loadingOperations.removeValue(forKey: indexPath)
+        }
     }
 }
 
@@ -184,7 +237,7 @@ extension ListMealVIewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MealTableViewCell.identifier, for: indexPath) as? MealTableViewCell else { return UITableViewCell() }
-        cell.nameMealLabel.text = presenter.mealModel[indexPath.row].strMeal
+        cell.updateAppearanceFor(.none, String())
         return cell
     }
 }
