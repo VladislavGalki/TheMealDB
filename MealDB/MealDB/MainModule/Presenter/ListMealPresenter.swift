@@ -15,14 +15,14 @@ protocol ListMealViewProtocol: AnyObject {
 
 protocol ListMealPresenterProtocol: AnyObject {
     init(view: ListMealViewProtocol, networkService: MealNetworkServiceProtocol)
-    var mealModel: [GetMealsDataResponse] { get set }
+    var mealModel: [MealViewModel] { get set }
     func getPopularMeal()
     func getMealByCategory(for category: String)
 }
 
 final class ListMealPresenter: ListMealPresenterProtocol {
     
-    var mealModel = [GetMealsDataResponse]()
+    var mealModel = [MealViewModel]()
     
     weak var view: ListMealViewProtocol?
     let networkService: MealNetworkServiceProtocol
@@ -48,14 +48,21 @@ final class ListMealPresenter: ListMealPresenterProtocol {
     }
     
     private func process(response: GetMealAPIResponse){
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
             switch response {
             case .success(let data):
-                self.mealModel = data.meals
+                self.convertToViewModel(data: data)
                 self.view?.succes()
             case .failure(let error):
                 self.view?.failure(error: error)
             }
+        }
+    }
+    
+    private func convertToViewModel(data: GetMealsResponse) {
+        self.mealModel = data.meals.compactMap { item in
+            return MealViewModel(id: item.idMeal, nameMeal: item.strMeal, strMealImage: item.strMealThumb, mealImage: .none)
         }
     }
 }

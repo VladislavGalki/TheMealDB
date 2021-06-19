@@ -72,7 +72,8 @@ extension MealNetworkService: MealNetworkServiceProtocol {
     func downloadImageFromUrl(from url: String?, completion: @escaping (UIImage?) -> ()) {
         
         guard let imageUrl = url, let url = URL(string: imageUrl) else { return }
-        let request = URLRequest(url: url)
+        var request = URLRequest(url: url)
+        request.cachePolicy = .returnCacheDataElseLoad
         
         let handler: Handler = { rawData, response, taskError in
             do {

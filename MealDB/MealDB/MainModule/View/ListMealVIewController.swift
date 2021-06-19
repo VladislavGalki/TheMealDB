@@ -159,35 +159,12 @@ extension ListMealVIewController: ListMealViewProtocol {
     }
 }
 
-
-//MARK: - UITableViewDataSourcePrefetching
-extension ListMealVIewController: UITableViewDataSourcePrefetching{
-    
-    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-        for indexPath in indexPaths {
-            let item = presenter.mealModel[indexPath.row]
-            let dataLoader = DataLoadOperation(url: item.strMealThumb)
-            loadingQueue.addOperation(dataLoader)
-            loadingOperations[indexPath] = dataLoader
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
-        for indexPath in indexPaths {
-            if let dataLoader = loadingOperations[indexPath] {
-                dataLoader.cancel()
-                loadingOperations.removeValue(forKey: indexPath)
-            }
-        }
-    }
-}
-
 //MARK: - UITableViewDelegate
 
 extension ListMealVIewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let item = presenter.mealModel[indexPath.row]
-        var height = MealTableViewCell.heighForCell(item.strMeal, width: tableView.frame.width)
+        var height = MealTableViewCell.heighForCell(item.nameMeal, width: tableView.frame.width)
         if height < 80 {
             height = 80
         }
@@ -200,19 +177,21 @@ extension ListMealVIewController: UITableViewDelegate {
         
         let item = presenter.mealModel[indexPath.row]
         
-        let updateCellClosure: (UIImage?) -> () = { [unowned self] (image) in
-            cell.updateAppearanceFor(image, item.strMeal)
-            self.loadingOperations.removeValue(forKey: indexPath)
+        let updateCellClosure: (MealViewModel?) -> () = { [weak self] model in
+          guard let self = self else { return }
+            cell.updateAppearanceFor(model)
+          self.loadingOperations.removeValue(forKey: indexPath)
         }
+
         if let dataLoader = loadingOperations[indexPath] {
-            if let image = dataLoader.image {
-                cell.updateAppearanceFor(image, item.strMeal)
+            if let model = dataLoader.mealModel {
+                cell.updateAppearanceFor(model)
                 loadingOperations.removeValue(forKey: indexPath)
             } else {
                 dataLoader.loadingCompleteHandler = updateCellClosure
             }
         } else {
-            let dataLoader = DataLoadOperation(url: item.strMealThumb)
+            let dataLoader = DataLoadOperation(item)
             dataLoader.loadingCompleteHandler = updateCellClosure
             loadingQueue.addOperation(dataLoader)
             loadingOperations[indexPath] = dataLoader
@@ -237,7 +216,30 @@ extension ListMealVIewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MealTableViewCell.identifier, for: indexPath) as? MealTableViewCell else { return UITableViewCell() }
-        cell.updateAppearanceFor(.none, String())
+        cell.updateAppearanceFor(.none)
         return cell
+    }
+}
+
+//MARK: - UITableViewDataSourcePrefetching
+extension ListMealVIewController: UITableViewDataSourcePrefetching{
+    
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        for indexPath in indexPaths {
+            let item = presenter.mealModel[indexPath.row]
+            
+            let dataLoader = DataLoadOperation(item)
+            loadingQueue.addOperation(dataLoader)
+            loadingOperations[indexPath] = dataLoader
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
+        for indexPath in indexPaths {
+            if let dataLoader = loadingOperations[indexPath] {
+                dataLoader.cancel()
+                loadingOperations.removeValue(forKey: indexPath)
+            }
+        }
     }
 }

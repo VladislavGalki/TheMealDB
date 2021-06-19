@@ -8,28 +8,39 @@
 import Foundation
 import UIKit.UIImage
 
+let cacheModel = NSCache<AnyObject, AnyObject>()
+
 class DataLoadOperation: Operation {
     
     let networkService: MealNetworkServiceProtocol = MealNetworkService()
+    var mealModel: MealViewModel?
+    var loadingCompleteHandler: ((MealViewModel) -> Void)?
+    private var _mealModel: MealViewModel
     
-    var image: UIImage?
-    var loadingCompleteHandler: ((UIImage?) -> ())?
-    private var url: String?
-    
-    init(url: String?) {
-        self.url = url!
+    init(_ mealModel: MealViewModel) {
+        _mealModel = mealModel
     }
     
     override func main() {
         if isCancelled { return }
         
-        guard let imageUrl = url else { return }
-        networkService.downloadImageFromUrl(from: imageUrl) { (image) in
-            DispatchQueue.main.async() { [weak self] in
-                guard let self = self else { return }
-                if self.isCancelled { return }
-                self.image = image
-                self.loadingCompleteHandler?(self.image)
+        guard let cachingUrl = URL(string: _mealModel.strMealImage) else { return }
+        
+        if let cachingImage = cacheModel.object(forKey: cachingUrl.absoluteString as NSString) {
+            if self.isCancelled { return }
+            self._mealModel.mealImage = cachingImage as? UIImage
+            self.mealModel = self._mealModel
+            self.loadingCompleteHandler?(self._mealModel)
+        } else {
+            if self.isCancelled { return }
+            networkService.downloadImageFromUrl(from: _mealModel.strMealImage) { (image) in
+                DispatchQueue.main.async() { [weak self] in
+                    guard let self = self else { return }
+                    self._mealModel.mealImage = image
+                    self.mealModel = self._mealModel
+                    cacheModel.setObject(image!, forKey: cachingUrl.absoluteString as NSString)
+                    self.loadingCompleteHandler?(self._mealModel)
+                }
             }
         }
     }

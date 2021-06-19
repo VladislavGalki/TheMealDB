@@ -41,7 +41,6 @@ final class MealTableViewCell: UITableViewCell {
         nameMealLabel.numberOfLines = 0
         nameMealLabel.textAlignment = .left
         nameMealLabel.font = Self.labelFont
-        nameMealLabel.text = "Arrabiata"
         nameMealLabel.translatesAutoresizingMaskIntoConstraints = false
         return nameMealLabel
     }()
@@ -94,20 +93,21 @@ final class MealTableViewCell: UITableViewCell {
         super.updateConstraints()
     }
     
-    func updateAppearanceFor(_ image: UIImage?, _ label: String) {
-        DispatchQueue.main.async { [unowned self] in
-            self.displayImage(image, label)
+    func updateAppearanceFor(_ model: MealViewModel?) {
+        DispatchQueue.main.async {
+            self.displayImage(model)
         }
     }
     
-    private func displayImage(_ image: UIImage?, _ mealName: String) {
-        if let _image = image {
-            imageMeal.image = _image
-            nameMealLabel.text = mealName
+    private func displayImage(_ model: MealViewModel?) {
+        if let model = model, let image = model.mealImage {
+            imageMeal.image = image
+            nameMealLabel.text = model.nameMeal
             loadingIndicator.stopAnimating()
         } else {
             loadingIndicator.startAnimating()
             imageMeal.image = .none
+            nameMealLabel.text = .none
         }
     }
     
