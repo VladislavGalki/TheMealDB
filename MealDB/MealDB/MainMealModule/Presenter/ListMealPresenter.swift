@@ -10,7 +10,7 @@ import UIKit
 
 protocol ListMealViewProtocol: AnyObject {
     func succes()
-    func failure(error: Error)
+    func failure(error: NetworkServiceError)
 }
 
 protocol ListMealPresenterProtocol: AnyObject {
@@ -22,15 +22,14 @@ protocol ListMealPresenterProtocol: AnyObject {
 
 final class ListMealPresenter: ListMealPresenterProtocol {
     
-    var mealModel = [MealViewModel]()
-    
     weak var view: ListMealViewProtocol?
     let networkService: MealNetworkServiceProtocol
+    
+    var mealModel = [MealViewModel]()
     
     init(view: ListMealViewProtocol, networkService: MealNetworkServiceProtocol) {
         self.view = view
         self.networkService = networkService
-        getPopularMeal()
     }
     
     func getPopularMeal() {

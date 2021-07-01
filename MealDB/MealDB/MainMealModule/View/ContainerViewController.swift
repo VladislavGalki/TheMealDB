@@ -16,14 +16,14 @@ final class ContainerViewController: UIViewController {
     
     // MARK: - Dependencies
     
-    let mealView: ListMealVIewController
+    let mealListView: ListMealVIewController
     let menuView: MenuViewController
     var centerController: UINavigationController!
     
     // MARK: - Init
     
     init(mealListView: ListMealVIewController, menuView: MenuViewController) {
-        self.mealView = mealListView
+        self.mealListView = mealListView
         self.menuView = menuView
         super.init(nibName: nil, bundle: nil)
     }
@@ -41,7 +41,7 @@ final class ContainerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureController()
+        configureMealController()
     }
     
     override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
@@ -54,19 +54,26 @@ final class ContainerViewController: UIViewController {
     
     // MARK: - Private methods
     
-    private func configureController() {
-        addChild(menuView)
-        view.addSubview(menuView.view)
-        didMove(toParent: self)
-        menuView.delegate = self
-        
-        centerController = UINavigationController(rootViewController: mealView)
+    private func configureMealController() {
         view.addSubview(centerController.view)
         addChild(centerController)
-        didMove(toParent: self)
-        mealView.delegate = self
+        centerController.didMove(toParent: self)
+        mealListView.delegate = self
     }
     
+    private func configureMenuController() {
+            view.insertSubview(menuView.view, at: 0)
+            addChild(menuView)
+            menuView.didMove(toParent: self)
+            menuView.delegate = self
+    }
+    
+    private func destroyMenuController(){
+        menuView.willMove(toParent: nil)
+        menuView.view.removeFromSuperview()
+        menuView.removeFromParent()
+    }
+
     private func animateStatusBar() {
         UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
             self.setNeedsStatusBarAppearanceUpdate()
@@ -76,33 +83,35 @@ final class ContainerViewController: UIViewController {
 
 // MARK: - MealVIewControllerDelegate
 
-extension ContainerViewController: MealVIewControllerDelegate {
+extension ContainerViewController: MealViewControllerDelegate {
     
     func didTapMenuButton(category: MenuOptions?) {
-        switch menuState {
-        case .closed:
-            isExpanded = true
-            animateStatusBar()
-            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut) {
-                self.centerController.view.frame.origin.x = self.mealView.view.frame.size.width - 100
-            } completion: { [weak self] done in
-                if done {
-                    self?.menuState = .opened
-                }
-            }
-        case .opened:
-            isExpanded = false
-            animateStatusBar()
+        
+        if !isExpanded {
+            configureMenuController()
+        }
+        
+        isExpanded = !isExpanded
+        showMenuController(shouldExpand: isExpanded, category: category)
+    }
+    
+    func showMenuController(shouldExpand: Bool, category: MenuOptions?) {
+        if shouldExpand {
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
+                self.centerController.view.frame.origin.x = self.centerController.view.frame.size.width - 100
+            }, completion: nil)
+        }else{
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut) {
                 self.centerController.view.frame.origin.x = 0
             } completion: { [weak self] done in
                 if done {
-                    self?.menuState = .closed
-                    self?.mealView.backView.isHidden = true
+                    self?.destroyMenuController()
+                    self?.mealListView.backView.isHidden = true
                     guard let selectedCategory = category else { return }
-                    self?.mealView.selectedCategory = selectedCategory.description
+                    self?.mealListView.selectedCategory = selectedCategory.description
                 }
             }
         }
+        animateStatusBar()
     }
 }

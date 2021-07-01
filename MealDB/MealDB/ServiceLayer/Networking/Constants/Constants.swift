@@ -12,6 +12,7 @@ enum Constants {
     enum MealAPIMethods {
         static let getPopularMeal = "https://themealdb.com/api/json/v1/1/random.php"
         static let getMealByCategory = "https://themealdb.com/api/json/v1/1/filter.php"
+        static let getMealById = "https://themealdb.com/api/json/v1/1/lookup.php"
     }
     
 }

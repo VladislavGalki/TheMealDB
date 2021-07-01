@@ -11,7 +11,7 @@ final class MenuViewController: UIViewController {
     
     // MARK: - Dependencies
     
-    weak var delegate: MealVIewControllerDelegate?
+    weak var delegate: MealViewControllerDelegate?
     
     // MARK: - UI
     

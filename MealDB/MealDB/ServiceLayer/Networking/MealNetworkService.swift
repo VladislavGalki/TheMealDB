@@ -19,12 +19,36 @@ final class MealNetworkService {
 }
 
 extension MealNetworkService: MealNetworkServiceProtocol {
-    
+
     typealias Handler = (Data?, URLResponse?, Error?) -> Void
     
     func getPopularMeal(completion: @escaping (GetMealAPIResponse) -> Void) {
         
         let components = URLComponents(string: Constants.MealAPIMethods.getPopularMeal)
+        guard let url = components?.url else { completion(.failure(.unknownError)); return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        
+        let handler: Handler = { rawData, response, taskError in
+            do {
+                let data = try self.httpResponse(data: rawData, response: response)
+                let response = self.decodeJson(type: GetMealsResponse.self, from: data)
+                if let response = response {
+                    completion(.success(response))
+                }
+            } catch _ as NetworkServiceError {
+                completion(.failure(.networkError))
+            } catch {
+                completion(.failure(.unknownError))
+            }
+        }
+        session.dataTask(with: request, completionHandler: handler).resume()
+    }
+    
+    func getMealByCategory(with category: String, completion: @escaping (GetMealAPIResponse) -> Void) {
+        
+        var components = URLComponents(string: Constants.MealAPIMethods.getMealByCategory)
+        components?.queryItems = [URLQueryItem(name: "c", value: category)]
         guard let url = components?.url else { completion(.failure(.unknownError)); return }
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
@@ -45,10 +69,10 @@ extension MealNetworkService: MealNetworkServiceProtocol {
         session.dataTask(with: request, completionHandler: handler).resume()
     }
     
-    func getMealByCategory(with category: String, completion: @escaping (GetMealAPIResponse) -> Void) {
-        
-        var components = URLComponents(string: Constants.MealAPIMethods.getMealByCategory)
-        components?.queryItems = [URLQueryItem(name: "c", value: category)]
+    func getMealById(with id: String, completion: @escaping (GetMealDetailAPIResponse) -> Void) {
+       
+        var components = URLComponents(string: Constants.MealAPIMethods.getMealById)
+        components?.queryItems = [URLQueryItem(name: "i", value: id)]
         guard let url = components?.url else { completion(.failure(.unknownError)); return }
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
@@ -56,7 +80,7 @@ extension MealNetworkService: MealNetworkServiceProtocol {
         let handler: Handler = { rawData, response, taskError in
             do {
                 let data = try self.httpResponse(data: rawData, response: response)
-                let response = self.decodeJson(type: GetMealsResponse.self, from: data)
+                let response = self.decodeJson(type: GetMealsDetailResponse.self, from: data)
                 if let response = response {
                     completion(.success(response))
                 }

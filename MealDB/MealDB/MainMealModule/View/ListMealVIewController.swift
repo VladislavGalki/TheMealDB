@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol MealVIewControllerDelegate: AnyObject {
+protocol MealViewControllerDelegate: AnyObject {
     func didTapMenuButton(category: MenuOptions?)
 }
 
@@ -15,7 +15,7 @@ final class ListMealVIewController: UIViewController {
     
     // MARK: - Dependencies
     
-    weak var delegate: MealVIewControllerDelegate?
+    weak var delegate: MealViewControllerDelegate?
     var presenter: ListMealPresenterProtocol!
     private lazy var loadingQueue = OperationQueue()
     private lazy var loadingOperations = [IndexPath : DataLoadOperation]()
@@ -91,6 +91,7 @@ final class ListMealVIewController: UIViewController {
         headerView.addSubview(titleLabel)
         view.addSubview(tableView)
         view.addSubview(backView)
+        presenter.getPopularMeal()
     }
     
     override func viewWillLayoutSubviews() {
@@ -149,13 +150,21 @@ final class ListMealVIewController: UIViewController {
 //MARK: - ListMealViewProtocol
 
 extension ListMealVIewController: ListMealViewProtocol {
+
     func succes() {
         titleLabel.text = selectedCategory
         tableView.reloadData()
     }
     
-    func failure(error: Error) {
-        print(error.localizedDescription)
+    func failure(error: NetworkServiceError) {
+        switch error {
+        case .networkError:
+            print("ERROR RUN Network view")
+        case .decodableError:
+            print("allert")
+        case .unknownError:
+            print("xz")
+        }
     }
 }
 
@@ -169,6 +178,12 @@ extension ListMealVIewController: UITableViewDelegate {
             height = 80
         }
         return height
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let model = presenter.mealModel[indexPath.row]
+        let detailMealViewController = Builder.createDetailMealModule(mealModel: model)
+        navigationController?.pushViewController(detailMealViewController, animated: true)
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
