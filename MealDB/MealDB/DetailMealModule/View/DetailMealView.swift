@@ -53,7 +53,6 @@ class DetailMealView: UIViewController {
         label.numberOfLines = 0
         label.textAlignment = .left
         label.font = UIFont(name: "Kefa", size: 20)!
-        label.sizeToFit()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

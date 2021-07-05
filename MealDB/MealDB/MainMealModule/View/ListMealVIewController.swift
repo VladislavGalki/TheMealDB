@@ -182,8 +182,7 @@ extension ListMealVIewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let model = presenter.mealModel[indexPath.row]
-        let detailMealViewController = Builder.createDetailMealModule(mealModel: model)
-        navigationController?.pushViewController(detailMealViewController, animated: true)
+        presenter.showDetailMeal(mealModel: model)
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

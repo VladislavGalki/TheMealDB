@@ -18,7 +18,6 @@ final class ContainerViewController: UIViewController {
     
     let mealListView: ListMealVIewController
     let menuView: MenuViewController
-    var centerController: UINavigationController!
     
     // MARK: - Init
     
@@ -55,9 +54,9 @@ final class ContainerViewController: UIViewController {
     // MARK: - Private methods
     
     private func configureMealController() {
-        view.addSubview(centerController.view)
-        addChild(centerController)
-        centerController.didMove(toParent: self)
+        view.addSubview(mealListView.view)
+        addChild(mealListView)
+        mealListView.didMove(toParent: self)
         mealListView.delegate = self
     }
     
@@ -98,11 +97,11 @@ extension ContainerViewController: MealViewControllerDelegate {
     func showMenuController(shouldExpand: Bool, category: MenuOptions?) {
         if shouldExpand {
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
-                self.centerController.view.frame.origin.x = self.centerController.view.frame.size.width - 100
+                self.mealListView.view.frame.origin.x = self.mealListView.view.frame.size.width - 100
             }, completion: nil)
         }else{
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut) {
-                self.centerController.view.frame.origin.x = 0
+                self.mealListView.view.frame.origin.x = 0
             } completion: { [weak self] done in
                 if done {
                     self?.destroyMenuController()

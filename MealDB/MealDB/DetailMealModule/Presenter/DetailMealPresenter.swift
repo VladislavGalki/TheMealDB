@@ -65,7 +65,7 @@ final class DetailMealPresenter: DetailMealPresenterProtocol {
             
             group.wait()
             
-            self.detailMealViewModel = DetailMealViewModel(id: item.idMeal, nameMeal: item.strMeal, strMealImage: item.strMealThumb, mealImage: self.mealModel.mealImage, instructions: item.strInstructions!)
+            self.detailMealViewModel = DetailMealViewModel(id: item.idMeal, nameMeal: item.strMeal, strMealImage: item.strMealThumb, mealImage: self.mealModel.mealImage, instructions: item.strInstructions!, youtubeVideo: item.strYoutube)
         }
     }
 }
