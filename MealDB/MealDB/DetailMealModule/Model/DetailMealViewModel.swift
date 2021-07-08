@@ -13,5 +13,5 @@ struct DetailMealViewModel {
     let strMealImage: String
     let mealImage: UIImage?
     let instructions: String
-    let youtubeVideo: String?
+    let youtubeVideo: String
 }

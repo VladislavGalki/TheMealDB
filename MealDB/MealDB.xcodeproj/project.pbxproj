@@ -35,6 +35,17 @@
 		04AACFDD2692496A00EB5DD0 /* LaunchScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AACFDC2692496A00EB5DD0 /* LaunchScreenPresenter.swift */; };
 		04B5CFAE2685E0AB004F7E60 /* GetMealsDetailResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B5CFAD2685E0AA004F7E60 /* GetMealsDetailResponse.swift */; };
 		04B5CFB12685E14F004F7E60 /* DetailMealViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B5CFB02685E14F004F7E60 /* DetailMealViewModel.swift */; };
+		04C0AB6D2694F62700A506B3 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C0AB6C2694F62700A506B3 /* CoreDataStack.swift */; };
+		04C0AB702694F6E000A506B3 /* CoreDataMeal.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 04C0AB6E2694F6E000A506B3 /* CoreDataMeal.xcdatamodeld */; };
+		04C0AB772694FC2E00A506B3 /* DetailMealCoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C0AB762694FC2E00A506B3 /* DetailMealCoreDataService.swift */; };
+		04C0AB7D269509DF00A506B3 /* DetailMealDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C0AB7C269509DF00A506B3 /* DetailMealDTO.swift */; };
+		04C0AB89269523D600A506B3 /* DetailMeal+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C0AB87269523D600A506B3 /* DetailMeal+CoreDataClass.swift */; };
+		04C0AB8A269523D600A506B3 /* DetailMeal+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C0AB88269523D600A506B3 /* DetailMeal+CoreDataProperties.swift */; };
+		04C0AB9F2697401200A506B3 /* VideoMealView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C0AB9E2697401200A506B3 /* VideoMealView.swift */; };
+		04EB4E0C269774BE002C03D0 /* VideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EB4E0B269774BE002C03D0 /* VideoView.swift */; };
+		04EB4E0E2697AFD0002C03D0 /* PresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EB4E0D2697AFD0002C03D0 /* PresentationController.swift */; };
+		04EB4E1A2697B812002C03D0 /* PanelTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EB4E192697B812002C03D0 /* PanelTransition.swift */; };
+		04EB4E1C2697BBAF002C03D0 /* VideoMealPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EB4E1B2697BBAF002C03D0 /* VideoMealPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +100,17 @@
 		04AACFDC2692496A00EB5DD0 /* LaunchScreenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenPresenter.swift; sourceTree = "<group>"; };
 		04B5CFAD2685E0AA004F7E60 /* GetMealsDetailResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMealsDetailResponse.swift; sourceTree = "<group>"; };
 		04B5CFB02685E14F004F7E60 /* DetailMealViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMealViewModel.swift; sourceTree = "<group>"; };
+		04C0AB6C2694F62700A506B3 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		04C0AB6F2694F6E000A506B3 /* DetailMealModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DetailMealModel.xcdatamodel; sourceTree = "<group>"; };
+		04C0AB762694FC2E00A506B3 /* DetailMealCoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMealCoreDataService.swift; sourceTree = "<group>"; };
+		04C0AB7C269509DF00A506B3 /* DetailMealDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMealDTO.swift; sourceTree = "<group>"; };
+		04C0AB87269523D600A506B3 /* DetailMeal+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DetailMeal+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		04C0AB88269523D600A506B3 /* DetailMeal+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DetailMeal+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		04C0AB9E2697401200A506B3 /* VideoMealView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoMealView.swift; sourceTree = "<group>"; };
+		04EB4E0B269774BE002C03D0 /* VideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoView.swift; sourceTree = "<group>"; };
+		04EB4E0D2697AFD0002C03D0 /* PresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationController.swift; sourceTree = "<group>"; };
+		04EB4E192697B812002C03D0 /* PanelTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelTransition.swift; sourceTree = "<group>"; };
+		04EB4E1B2697BBAF002C03D0 /* VideoMealPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoMealPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +181,7 @@
 				04AACFD72692378900EB5DD0 /* LaunchScreenModule */,
 				04772AD22677EE2F006891F6 /* MainMealModule */,
 				04772AF0267BF7A7006891F6 /* DetailMealModule */,
+				04C0AB9B2696FC2500A506B3 /* VideoMealModule */,
 				04772AD7267801C1006891F6 /* ServiceLayer */,
 				04772A9C2674ADAA006891F6 /* Info.plist */,
 			);
@@ -238,6 +261,7 @@
 				04772AEB267BF4C5006891F6 /* Router */,
 				04772AE6267A9B85006891F6 /* Helpers */,
 				04772AD8267802D0006891F6 /* Networking */,
+				04C0AB6B2694F5B900A506B3 /* CoreData */,
 			);
 			path = ServiceLayer;
 			sourceTree = "<group>";
@@ -342,10 +366,59 @@
 		04B5CFAF2685E13D004F7E60 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				04C0AB712694F7F800A506B3 /* CoreDataModel */,
 				04B5CFAD2685E0AA004F7E60 /* GetMealsDetailResponse.swift */,
 				04B5CFB02685E14F004F7E60 /* DetailMealViewModel.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		04C0AB6B2694F5B900A506B3 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				04C0AB6C2694F62700A506B3 /* CoreDataStack.swift */,
+				04C0AB762694FC2E00A506B3 /* DetailMealCoreDataService.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		04C0AB712694F7F800A506B3 /* CoreDataModel */ = {
+			isa = PBXGroup;
+			children = (
+				04C0AB87269523D600A506B3 /* DetailMeal+CoreDataClass.swift */,
+				04C0AB88269523D600A506B3 /* DetailMeal+CoreDataProperties.swift */,
+				04C0AB7C269509DF00A506B3 /* DetailMealDTO.swift */,
+				04C0AB6E2694F6E000A506B3 /* CoreDataMeal.xcdatamodeld */,
+			);
+			path = CoreDataModel;
+			sourceTree = "<group>";
+		};
+		04C0AB9B2696FC2500A506B3 /* VideoMealModule */ = {
+			isa = PBXGroup;
+			children = (
+				04C0AB9C2696FC2F00A506B3 /* View */,
+				04C0AB9D2696FC3400A506B3 /* Presenter */,
+			);
+			path = VideoMealModule;
+			sourceTree = "<group>";
+		};
+		04C0AB9C2696FC2F00A506B3 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				04C0AB9E2697401200A506B3 /* VideoMealView.swift */,
+				04EB4E0B269774BE002C03D0 /* VideoView.swift */,
+				04EB4E0D2697AFD0002C03D0 /* PresentationController.swift */,
+				04EB4E192697B812002C03D0 /* PanelTransition.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		04C0AB9D2696FC3400A506B3 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				04EB4E1B2697BBAF002C03D0 /* VideoMealPresenter.swift */,
+			);
+			path = Presenter;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -478,26 +551,37 @@
 			buildActionMask = 2147483647;
 			files = (
 				04772AF8267D4484006891F6 /* DataLoadOperation.swift in Sources */,
+				04C0AB702694F6E000A506B3 /* CoreDataMeal.xcdatamodeld in Sources */,
 				0447AA132693BC0E006B51A4 /* AssemblyBuilder.swift in Sources */,
 				04772AFC267E2EB7006891F6 /* MealViewModel.swift in Sources */,
 				04772A932674ADA6006891F6 /* ContainerViewController.swift in Sources */,
+				04EB4E1A2697B812002C03D0 /* PanelTransition.swift in Sources */,
+				04C0AB89269523D600A506B3 /* DetailMeal+CoreDataClass.swift in Sources */,
+				04C0AB7D269509DF00A506B3 /* DetailMealDTO.swift in Sources */,
 				04AACFDD2692496A00EB5DD0 /* LaunchScreenPresenter.swift in Sources */,
 				04772B43268149F5006891F6 /* DetailMealPresenter.swift in Sources */,
 				04772ACB2676AEE4006891F6 /* MenuOptions.swift in Sources */,
+				04C0AB9F2697401200A506B3 /* VideoMealView.swift in Sources */,
 				04772AC22674B077006891F6 /* ListMealVIewController.swift in Sources */,
 				04772AC82676AA49006891F6 /* MenuTableViewCell.swift in Sources */,
 				04772AC626755E84006891F6 /* MealTableViewCell.swift in Sources */,
+				04EB4E0E2697AFD0002C03D0 /* PresentationController.swift in Sources */,
 				04772AE026780439006891F6 /* MealNetworkService.swift in Sources */,
 				04772AC02674B039006891F6 /* MenuViewController.swift in Sources */,
 				04B5CFAE2685E0AB004F7E60 /* GetMealsDetailResponse.swift in Sources */,
+				04C0AB772694FC2E00A506B3 /* DetailMealCoreDataService.swift in Sources */,
 				04772AE526795531006891F6 /* ListMealPresenter.swift in Sources */,
 				04772AF2267BF7C2006891F6 /* DetailMealView.swift in Sources */,
 				04772AE3267805C4006891F6 /* Constants.swift in Sources */,
 				0447AA112693BBBD006B51A4 /* Router.swift in Sources */,
+				04C0AB8A269523D600A506B3 /* DetailMeal+CoreDataProperties.swift in Sources */,
 				04772ADE26780382006891F6 /* NetworkServiceError.swift in Sources */,
 				04B5CFB12685E14F004F7E60 /* DetailMealViewModel.swift in Sources */,
 				04772AC426753A81006891F6 /* TopHeaderView.swift in Sources */,
+				04C0AB6D2694F62700A506B3 /* CoreDataStack.swift in Sources */,
 				04772AD42677FA23006891F6 /* GetMealsResponse.swift in Sources */,
+				04EB4E0C269774BE002C03D0 /* VideoView.swift in Sources */,
+				04EB4E1C2697BBAF002C03D0 /* VideoMealPresenter.swift in Sources */,
 				04AACFD9269237DE00EB5DD0 /* LaunchScreenView.swift in Sources */,
 				04772ADB2678031B006891F6 /* MealNetworkServiceProtocol.swift in Sources */,
 				04772A8F2674ADA6006891F6 /* AppDelegate.swift in Sources */,
@@ -819,6 +903,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		04C0AB6E2694F6E000A506B3 /* CoreDataMeal.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				04C0AB6F2694F6E000A506B3 /* DetailMealModel.xcdatamodel */,
+			);
+			currentVersion = 04C0AB6F2694F6E000A506B3 /* DetailMealModel.xcdatamodel */;
+			path = CoreDataMeal.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 04772A832674ADA6006891F6 /* Project object */;
 }

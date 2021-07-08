@@ -19,7 +19,7 @@ final class MealTableViewCell: UITableViewCell {
     
     static let labelFont = UIFont(name: "Kefa", size: 20)!
     
-    lazy var backView: UIView = {
+    let backView: UIView = {
         let backView = UIView(frame: .zero)
         backView.backgroundColor = UIColor(red: 255/255, green: 201/255, blue: 201/255, alpha: 1)
         backView.layer.cornerRadius = 8

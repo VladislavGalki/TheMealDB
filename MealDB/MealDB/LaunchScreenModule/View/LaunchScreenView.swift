@@ -9,7 +9,11 @@ import UIKit
 
 final class LaunchScreenView: UIViewController {
     
+    // MARK: - Dependencies
+    
     var presenter: LaunchScreenPresenterProtocol!
+    
+    // MARK: - UI
     
     let titleLabel: UILabel = {
         let label = UILabel()
@@ -52,6 +56,8 @@ final class LaunchScreenView: UIViewController {
         return label
     }()
     
+    // MARK: - Life cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 224/255, green: 234/255, blue: 245/255, alpha: 1)
@@ -70,8 +76,7 @@ final class LaunchScreenView: UIViewController {
         view.addSubview(textField)
         view.addSubview(userNameLabel)
         
-        NSLayoutConstraint.activate([
-            
+        let viewConstraint = [
             titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
             titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
@@ -88,21 +93,19 @@ final class LaunchScreenView: UIViewController {
             userNameLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
             userNameLabel.widthAnchor.constraint(equalToConstant: 280),
             userNameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-            
-        ])
+        ]
+        
+        NSLayoutConstraint.activate(viewConstraint)
         textField.layer.cornerRadius = 5
     }
-    
     
     //MARK: - private func
     
     private func presentMainView() {
-//        let mainVC = Builder.createMainModule()
-//        navigationController?.pushViewController(mainVC, animated: true)
         presenter.presentMealViewController()
     }
     
-    private func presentationAnimation(userNameExist: Bool ,userName: String) {
+    private func presentationWithAnimation(userNameExist: Bool ,userName: String) {
         if userNameExist {
             UIView.animate(withDuration: 2, delay: 0.5, options: .curveEaseInOut) { [self] in
                 userNameLabel.text = "Welcome \(userName)"
@@ -123,7 +126,7 @@ final class LaunchScreenView: UIViewController {
 //MARK: - LaunchScreenViewProtocol
 extension LaunchScreenView: LaunchScreenViewProtocol {
     func presentAnimationUser(is userNameExist: Bool, userName: String) {
-        presentationAnimation(userNameExist: userNameExist, userName: userName)
+        presentationWithAnimation(userNameExist: userNameExist, userName: userName)
     }
 }
 

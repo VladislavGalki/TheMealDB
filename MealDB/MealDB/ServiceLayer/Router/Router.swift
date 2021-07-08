@@ -15,7 +15,8 @@ protocol RouterMain {
 protocol RouterProtocol: RouterMain {
     func launchScreenViewController()
     func mainMealViewController()
-    func showDetailMeal(mealModel: MealViewModel)
+    func showDetailMealController(mealModel: MealViewModel)
+    func showVideoMealController(videoUrlPath: String)
 }
 
 final class Router: RouterProtocol {
@@ -42,11 +43,20 @@ final class Router: RouterProtocol {
         }
     }
     
-    func showDetailMeal(mealModel: MealViewModel) {
+    func showDetailMealController(mealModel: MealViewModel) {
         if let navigationController = navigationController {
-            guard let detailViewController = assemblyBuilder?.createDetailMealModule(mealModel: mealModel) else { return }
+            guard let detailViewController = assemblyBuilder?.createDetailMealModule(mealModel: mealModel, router: self) else { return }
             navigationController.pushViewController(detailViewController, animated: true)
         }
     }
     
+    func showVideoMealController(videoUrlPath: String) {
+        if let navigationController = navigationController {
+            guard let videoViewController = assemblyBuilder?.createVideoMealModule(videoUrlPath: videoUrlPath) else { return }
+            let transition = PanelTransition()
+            videoViewController.modalPresentationStyle = .custom
+            videoViewController.transitioningDelegate = transition
+            navigationController.present(videoViewController, animated: true, completion: nil)
+        }
+    }
 }

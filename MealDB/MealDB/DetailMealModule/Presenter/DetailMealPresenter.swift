@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol DetailMealViewProtocol: AnyObject {
     func succes()
@@ -13,29 +14,41 @@ protocol DetailMealViewProtocol: AnyObject {
 }
 
 protocol DetailMealPresenterProtocol: AnyObject {
-    init(view: DetailMealViewProtocol, networkService: MealNetworkServiceProtocol, mealModel: MealViewModel)
-    var detailMealViewModel: DetailMealViewModel? { get set }
+    init(view: DetailMealViewProtocol, networkService: MealNetworkServiceProtocol, mealModel: MealViewModel, coreDataService: DetailMealCoreDataServiceProtocol, router: RouterProtocol)
+    var detailMealViewModel: [DetailMealViewModel] { get set }
     func getDetailMealById()
+    func presentVideoMealController()
 }
 
 final class DetailMealPresenter: DetailMealPresenterProtocol {
     
     weak var view: DetailMealViewProtocol?
     let networkService: MealNetworkServiceProtocol
-    var detailMealViewModel: DetailMealViewModel? = nil
+    let coreDataService: DetailMealCoreDataServiceProtocol
+    var detailMealViewModel = [DetailMealViewModel]()
+    var router: RouterProtocol?
     
     var mealModel: MealViewModel
+    var downloadImage: UIImage?
     
-    required init(view: DetailMealViewProtocol, networkService: MealNetworkServiceProtocol, mealModel: MealViewModel) {
+    required init(view: DetailMealViewProtocol, networkService: MealNetworkServiceProtocol, mealModel: MealViewModel, coreDataService: DetailMealCoreDataServiceProtocol, router: RouterProtocol) {
         self.view = view
         self.networkService = networkService
         self.mealModel = mealModel
+        self.coreDataService = coreDataService
+        self.router = router
     }
     
     func getDetailMealById() {
-        networkService.getMealById(with: mealModel.id) { [weak self] response in
-            guard let self = self else { return }
-            self.process(response: response)
+        let result = coreDataService.getModelMeal(with: NSPredicate.init(format: "id == %@", mealModel.id))
+        if !result.isEmpty {
+            convertDataToViewModel(data: result)
+            self.view?.succes()
+        }else {
+            networkService.getMealById(with: mealModel.id) { [weak self] response in
+                guard let self = self else { return }
+                self.process(response: response)
+            }
         }
     }
     
@@ -44,28 +57,55 @@ final class DetailMealPresenter: DetailMealPresenterProtocol {
             guard let self = self else { return }
             switch response {
             case .success(let data):
-                self.convertToViewModel(data: data.meals)
-                self.view?.succes()
+                self.prepareToPresent(data: data.meals)
             case .failure(let error):
                 self.view?.failure(error: error)
             }
         }
     }
     
-    private func convertToViewModel(data: [GetMealsDetailDataResponse]) {
+    private func prepareToPresent(data: [GetMealsDetailDataResponse]) {
         let group = DispatchGroup()
         
-        data.forEach { item in
+        self.detailMealViewModel = data.compactMap { item in
             group.enter()
             networkService.downloadImageFromUrl(from: item.strMealThumb) { [weak self] image in
                 guard let self = self else { return }
-                self.mealModel.mealImage = image
+                self.downloadImage = image
+                group.leave()
+            }
+            group.wait()
+            print(item)
+            return DetailMealViewModel(id: item.idMeal, nameMeal: item.strMeal, strMealImage: item.strMealThumb, mealImage: downloadImage, instructions: item.strInstructions ?? "", youtubeVideo: item.strYoutube ?? "")
+        }
+        DispatchQueue.global().async {
+            self.coreDataService.create(detailMealModel: self.detailMealViewModel)
+        }
+        self.view?.succes()
+    }
+    
+    private func convertDataToViewModel(data: [DetailMealDTO]) {
+        let group = DispatchGroup()
+        
+        self.detailMealViewModel = data.compactMap { item in
+            
+            group.enter()
+            networkService.downloadImageFromUrl(from: item.strMealImage) { [weak self] image in
+                guard let self = self else { return }
+                self.downloadImage = image
                 group.leave()
             }
             
             group.wait()
-            
-            self.detailMealViewModel = DetailMealViewModel(id: item.idMeal, nameMeal: item.strMeal, strMealImage: item.strMealThumb, mealImage: self.mealModel.mealImage, instructions: item.strInstructions!, youtubeVideo: item.strYoutube)
+            print(item)
+            return DetailMealViewModel(id: item.id, nameMeal: item.nameMeal, strMealImage: item.strMealImage, mealImage: downloadImage, instructions: item.instructions, youtubeVideo: item.youtubeVideo)
+        }
+    }
+    
+    func presentVideoMealController() {
+        let urlPath = detailMealViewModel[0].youtubeVideo
+        if !urlPath.isEmpty {
+            router?.showVideoMealController(videoUrlPath: urlPath)
         }
     }
 }

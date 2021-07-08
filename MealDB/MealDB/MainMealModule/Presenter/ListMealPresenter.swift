@@ -29,7 +29,7 @@ final class ListMealPresenter: ListMealPresenterProtocol {
     
     var mealModel = [MealViewModel]()
     
-    init(view: ListMealViewProtocol, networkService: MealNetworkServiceProtocol, router: RouterProtocol) {
+    required init(view: ListMealViewProtocol, networkService: MealNetworkServiceProtocol, router: RouterProtocol) {
         self.view = view
         self.networkService = networkService
         self.router = router
@@ -50,7 +50,7 @@ final class ListMealPresenter: ListMealPresenterProtocol {
     }
     
     func showDetailMeal(mealModel: MealViewModel) {
-        router?.showDetailMeal(mealModel: mealModel)
+        router?.showDetailMealController(mealModel: mealModel)
     }
     
     private func process(response: GetMealAPIResponse){

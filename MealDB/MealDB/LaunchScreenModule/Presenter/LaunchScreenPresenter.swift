@@ -43,6 +43,5 @@ final class LaunchScreenPresenter: LaunchScreenPresenterProtocol {
     
     func saveUserName(for name: String) {
         UserDefaults.standard.setValue(name, forKey: userNameKey)
-        print(name)
     }
 }

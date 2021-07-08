@@ -85,17 +85,29 @@ final class ListMealVIewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configure()
+        presenter.getPopularMeal()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
+    // MARK: - Private methods
+    
+    func configure() {
         view.backgroundColor = .systemBackground
         view.addSubview(headerView)
         headerView.addSubview(buttonMenu)
         headerView.addSubview(titleLabel)
         view.addSubview(tableView)
         view.addSubview(backView)
-        presenter.getPopularMeal()
-    }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
         
         backView.frame = .init(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         
@@ -125,18 +137,6 @@ final class ListMealVIewController: UIViewController {
         NSLayoutConstraint.activate(tableViewConstraint)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-    }
-    
-    // MARK: - Private methods
-    
     @objc func didTapMenuButton() {
         backView.isHidden = false
         delegate?.didTapMenuButton(category: nil)
@@ -150,7 +150,7 @@ final class ListMealVIewController: UIViewController {
 //MARK: - ListMealViewProtocol
 
 extension ListMealVIewController: ListMealViewProtocol {
-
+    
     func succes() {
         titleLabel.text = selectedCategory
         tableView.reloadData()
@@ -192,11 +192,11 @@ extension ListMealVIewController: UITableViewDelegate {
         let item = presenter.mealModel[indexPath.row]
         
         let updateCellClosure: (MealViewModel?) -> () = { [weak self] model in
-          guard let self = self else { return }
+            guard let self = self else { return }
             cell.updateAppearanceFor(model)
-          self.loadingOperations.removeValue(forKey: indexPath)
+            self.loadingOperations.removeValue(forKey: indexPath)
         }
-
+        
         if let dataLoader = loadingOperations[indexPath] {
             if let model = dataLoader.mealModel {
                 cell.updateAppearanceFor(model)
