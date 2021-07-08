@@ -75,7 +75,6 @@ final class DetailMealPresenter: DetailMealPresenterProtocol {
                 group.leave()
             }
             group.wait()
-            print(item)
             return DetailMealViewModel(id: item.idMeal, nameMeal: item.strMeal, strMealImage: item.strMealThumb, mealImage: downloadImage, instructions: item.strInstructions ?? "", youtubeVideo: item.strYoutube ?? "")
         }
         DispatchQueue.global().async {
@@ -97,7 +96,6 @@ final class DetailMealPresenter: DetailMealPresenterProtocol {
             }
             
             group.wait()
-            print(item)
             return DetailMealViewModel(id: item.id, nameMeal: item.nameMeal, strMealImage: item.strMealImage, mealImage: downloadImage, instructions: item.instructions, youtubeVideo: item.youtubeVideo)
         }
     }

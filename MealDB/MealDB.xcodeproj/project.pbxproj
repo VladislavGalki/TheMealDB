@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		0447AA112693BBBD006B51A4 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447AA102693BBBD006B51A4 /* Router.swift */; };
 		0447AA132693BC0E006B51A4 /* AssemblyBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447AA122693BC0E006B51A4 /* AssemblyBuilder.swift */; };
+		044E99882697C0E300A9BE5D /* DetailMeal+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044E99862697C0E200A9BE5D /* DetailMeal+CoreDataClass.swift */; };
+		044E99892697C0E300A9BE5D /* DetailMeal+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044E99872697C0E300A9BE5D /* DetailMeal+CoreDataProperties.swift */; };
 		04772A8F2674ADA6006891F6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04772A8E2674ADA6006891F6 /* AppDelegate.swift */; };
 		04772A932674ADA6006891F6 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04772A922674ADA6006891F6 /* ContainerViewController.swift */; };
 		04772A982674ADAA006891F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04772A972674ADAA006891F6 /* Assets.xcassets */; };
@@ -39,8 +41,6 @@
 		04C0AB702694F6E000A506B3 /* CoreDataMeal.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 04C0AB6E2694F6E000A506B3 /* CoreDataMeal.xcdatamodeld */; };
 		04C0AB772694FC2E00A506B3 /* DetailMealCoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C0AB762694FC2E00A506B3 /* DetailMealCoreDataService.swift */; };
 		04C0AB7D269509DF00A506B3 /* DetailMealDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C0AB7C269509DF00A506B3 /* DetailMealDTO.swift */; };
-		04C0AB89269523D600A506B3 /* DetailMeal+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C0AB87269523D600A506B3 /* DetailMeal+CoreDataClass.swift */; };
-		04C0AB8A269523D600A506B3 /* DetailMeal+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C0AB88269523D600A506B3 /* DetailMeal+CoreDataProperties.swift */; };
 		04C0AB9F2697401200A506B3 /* VideoMealView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C0AB9E2697401200A506B3 /* VideoMealView.swift */; };
 		04EB4E0C269774BE002C03D0 /* VideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EB4E0B269774BE002C03D0 /* VideoView.swift */; };
 		04EB4E0E2697AFD0002C03D0 /* PresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EB4E0D2697AFD0002C03D0 /* PresentationController.swift */; };
@@ -68,6 +68,8 @@
 /* Begin PBXFileReference section */
 		0447AA102693BBBD006B51A4 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		0447AA122693BC0E006B51A4 /* AssemblyBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssemblyBuilder.swift; sourceTree = "<group>"; };
+		044E99862697C0E200A9BE5D /* DetailMeal+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DetailMeal+CoreDataClass.swift"; sourceTree = "<group>"; };
+		044E99872697C0E300A9BE5D /* DetailMeal+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DetailMeal+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		04772A8B2674ADA6006891F6 /* MealDB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MealDB.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04772A8E2674ADA6006891F6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04772A922674ADA6006891F6 /* ContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
@@ -104,8 +106,6 @@
 		04C0AB6F2694F6E000A506B3 /* DetailMealModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DetailMealModel.xcdatamodel; sourceTree = "<group>"; };
 		04C0AB762694FC2E00A506B3 /* DetailMealCoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMealCoreDataService.swift; sourceTree = "<group>"; };
 		04C0AB7C269509DF00A506B3 /* DetailMealDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMealDTO.swift; sourceTree = "<group>"; };
-		04C0AB87269523D600A506B3 /* DetailMeal+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DetailMeal+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		04C0AB88269523D600A506B3 /* DetailMeal+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DetailMeal+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		04C0AB9E2697401200A506B3 /* VideoMealView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoMealView.swift; sourceTree = "<group>"; };
 		04EB4E0B269774BE002C03D0 /* VideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoView.swift; sourceTree = "<group>"; };
 		04EB4E0D2697AFD0002C03D0 /* PresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationController.swift; sourceTree = "<group>"; };
@@ -385,8 +385,8 @@
 		04C0AB712694F7F800A506B3 /* CoreDataModel */ = {
 			isa = PBXGroup;
 			children = (
-				04C0AB87269523D600A506B3 /* DetailMeal+CoreDataClass.swift */,
-				04C0AB88269523D600A506B3 /* DetailMeal+CoreDataProperties.swift */,
+				044E99862697C0E200A9BE5D /* DetailMeal+CoreDataClass.swift */,
+				044E99872697C0E300A9BE5D /* DetailMeal+CoreDataProperties.swift */,
 				04C0AB7C269509DF00A506B3 /* DetailMealDTO.swift */,
 				04C0AB6E2694F6E000A506B3 /* CoreDataMeal.xcdatamodeld */,
 			);
@@ -550,13 +550,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				044E99892697C0E300A9BE5D /* DetailMeal+CoreDataProperties.swift in Sources */,
 				04772AF8267D4484006891F6 /* DataLoadOperation.swift in Sources */,
 				04C0AB702694F6E000A506B3 /* CoreDataMeal.xcdatamodeld in Sources */,
 				0447AA132693BC0E006B51A4 /* AssemblyBuilder.swift in Sources */,
 				04772AFC267E2EB7006891F6 /* MealViewModel.swift in Sources */,
 				04772A932674ADA6006891F6 /* ContainerViewController.swift in Sources */,
+				044E99882697C0E300A9BE5D /* DetailMeal+CoreDataClass.swift in Sources */,
 				04EB4E1A2697B812002C03D0 /* PanelTransition.swift in Sources */,
-				04C0AB89269523D600A506B3 /* DetailMeal+CoreDataClass.swift in Sources */,
 				04C0AB7D269509DF00A506B3 /* DetailMealDTO.swift in Sources */,
 				04AACFDD2692496A00EB5DD0 /* LaunchScreenPresenter.swift in Sources */,
 				04772B43268149F5006891F6 /* DetailMealPresenter.swift in Sources */,
@@ -574,7 +575,6 @@
 				04772AF2267BF7C2006891F6 /* DetailMealView.swift in Sources */,
 				04772AE3267805C4006891F6 /* Constants.swift in Sources */,
 				0447AA112693BBBD006B51A4 /* Router.swift in Sources */,
-				04C0AB8A269523D600A506B3 /* DetailMeal+CoreDataProperties.swift in Sources */,
 				04772ADE26780382006891F6 /* NetworkServiceError.swift in Sources */,
 				04B5CFB12685E14F004F7E60 /* DetailMealViewModel.swift in Sources */,
 				04772AC426753A81006891F6 /* TopHeaderView.swift in Sources */,
