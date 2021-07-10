@@ -10,7 +10,7 @@ import UIKit
 
 protocol DetailMealViewProtocol: AnyObject {
     func succes()
-    func failure(error: Error)
+    func failure(error: NetworkServiceError)
 }
 
 protocol DetailMealPresenterProtocol: AnyObject {

@@ -29,6 +29,10 @@ final class VideoView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        videoView.stopLoading()
+    }
+    
     override class var requiresConstraintBasedLayout: Bool {
         return true
     }

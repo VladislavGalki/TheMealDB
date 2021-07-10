@@ -71,6 +71,20 @@ final class ListMealVIewController: UIViewController {
         return tableView
     }()
     
+    lazy var errorView: ErrorHelperView = {
+        let view = ErrorHelperView(backgroundColor: .white)
+        view.delegate = self
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    let loadIndicator: UIActivityIndicatorView = {
+       let indicator = UIActivityIndicatorView()
+        indicator.style = .large
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
+    }()
+    
     // MARK: - Internal Properties
     
     var selectedCategory: String = "Popular dishes" {
@@ -81,10 +95,13 @@ final class ListMealVIewController: UIViewController {
         }
     }
     
+    var dataIsLoaded: Bool = false
+    
     // MARK: - Life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureIndicatorView()
         configure()
         presenter.getPopularMeal()
     }
@@ -152,18 +169,62 @@ final class ListMealVIewController: UIViewController {
 extension ListMealVIewController: ListMealViewProtocol {
     
     func succes() {
+        dataIsLoaded = true
+        configureErrorView()
         titleLabel.text = selectedCategory
         tableView.reloadData()
     }
     
     func failure(error: NetworkServiceError) {
+        dataIsLoaded = false
         switch error {
         case .networkError:
-            print("ERROR RUN Network view")
+            configureErrorView()
         case .decodableError:
-            print("allert")
+            configureErrorView()
         case .unknownError:
-            print("xz")
+            print("Error unknownError")
+        }
+    }
+}
+
+//MARK: - ErrorHelperViewDelegate
+
+extension ListMealVIewController: ErrorHelperViewDelegate {
+    func refreshData() {
+        if selectedCategory != "Popular dishes" {
+            presenter.getMealByCategory(for: selectedCategory)
+        } else {
+            presenter.getPopularMeal()
+        }
+    }
+    
+    private func configureErrorView() {
+        if dataIsLoaded {
+            errorView.removeFromSuperview()
+            configureIndicatorView()
+        } else {
+            view.addSubview(errorView)
+            NSLayoutConstraint.activate([
+                errorView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
+                errorView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                errorView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                errorView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            ])
+        }
+    }
+    
+    private func configureIndicatorView() {
+        if dataIsLoaded {
+            loadIndicator.stopAnimating()
+            loadIndicator.removeFromSuperview()
+        } else {
+            tableView.addSubview(loadIndicator)
+            loadIndicator.startAnimating()
+            NSLayoutConstraint.activate([
+                loadIndicator.centerXAnchor.constraint(equalTo: tableView.centerXAnchor),
+                loadIndicator.centerYAnchor.constraint(equalTo: tableView.centerYAnchor)
+            ])
         }
     }
 }

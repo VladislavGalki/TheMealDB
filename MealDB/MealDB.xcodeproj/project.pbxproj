@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0418B76D2698CAAF002F9762 /* ErrorHelperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418B76C2698CAAF002F9762 /* ErrorHelperView.swift */; };
 		0447AA112693BBBD006B51A4 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447AA102693BBBD006B51A4 /* Router.swift */; };
 		0447AA132693BC0E006B51A4 /* AssemblyBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447AA122693BC0E006B51A4 /* AssemblyBuilder.swift */; };
 		044E99882697C0E300A9BE5D /* DetailMeal+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044E99862697C0E200A9BE5D /* DetailMeal+CoreDataClass.swift */; };
@@ -66,6 +67,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0418B76C2698CAAF002F9762 /* ErrorHelperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHelperView.swift; sourceTree = "<group>"; };
 		0447AA102693BBBD006B51A4 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		0447AA122693BC0E006B51A4 /* AssemblyBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssemblyBuilder.swift; sourceTree = "<group>"; };
 		044E99862697C0E200A9BE5D /* DetailMeal+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DetailMeal+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -305,6 +307,7 @@
 			isa = PBXGroup;
 			children = (
 				04772AF7267D4484006891F6 /* DataLoadOperation.swift */,
+				0418B76C2698CAAF002F9762 /* ErrorHelperView.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -551,6 +554,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				044E99892697C0E300A9BE5D /* DetailMeal+CoreDataProperties.swift in Sources */,
+				0418B76D2698CAAF002F9762 /* ErrorHelperView.swift in Sources */,
 				04772AF8267D4484006891F6 /* DataLoadOperation.swift in Sources */,
 				04C0AB702694F6E000A506B3 /* CoreDataMeal.xcdatamodeld in Sources */,
 				0447AA132693BC0E006B51A4 /* AssemblyBuilder.swift in Sources */,

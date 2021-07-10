@@ -46,6 +46,7 @@ class DetailMealView: UIViewController {
         label.textAlignment = .left
         label.text = "Instructions:"
         label.font = UIFont(name: "Kefa", size: 24)!
+        label.isHidden = true
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -61,7 +62,7 @@ class DetailMealView: UIViewController {
     
     let watchVideoButton: UIButton = {
        let button = UIButton()
-        button.setTitle("(Watch video)", for: .normal)
+        button.setTitle("(watch video)", for: .normal)
         button.setTitleColor(.blue, for: .normal)
         button.isHidden = true
         button.addTarget(self, action: #selector(didTapToWatchVideo), for: .touchUpInside)
@@ -69,9 +70,28 @@ class DetailMealView: UIViewController {
         return button
     }()
     
+    lazy var errorView: ErrorHelperView = {
+        let view = ErrorHelperView(backgroundColor: .white)
+        view.delegate = self
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    let loadIndicator: UIActivityIndicatorView = {
+       let indicator = UIActivityIndicatorView()
+        indicator.style = .large
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
+    }()
+    
+    // MARK: - Internal Properties
+    
+    var dataIsLoaded: Bool = false
+    
     // MARK: - Life cycle
     
     override func viewDidLoad() {
+        configureIndicatorView()
         presenter.getDetailMealById()
         configure()
     }
@@ -122,6 +142,7 @@ class DetailMealView: UIViewController {
 
 extension DetailMealView: DetailMealViewProtocol {
     func succes() {
+        dataIsLoaded = true
         let model = presenter.detailMealViewModel[0]
         titleMealLabel.text = model.nameMeal
         mealImageView.image = model.mealImage
@@ -131,10 +152,56 @@ extension DetailMealView: DetailMealViewProtocol {
         if !model.youtubeVideo.isEmpty {
             watchVideoButton.isHidden = false
         }
+        
+        instructionsMeallLabel.isHidden = false
+        configureErrorView()
     }
     
-    func failure(error: Error) {
-        print(error.localizedDescription)
+    func failure(error: NetworkServiceError) {
+        dataIsLoaded = false
+        switch error {
+        case .networkError:
+            configureErrorView()
+        case .decodableError:
+            configureErrorView()
+        case .unknownError:
+            print("Error - unknownError")
+        }
+    }
+}
+
+extension DetailMealView: ErrorHelperViewDelegate {
+    func refreshData() {
+        presenter.getDetailMealById()
+    }
+    
+    private func configureErrorView() {
+        if dataIsLoaded {
+            errorView.removeFromSuperview()
+            configureIndicatorView()
+        } else {
+            view.addSubview(errorView)
+            NSLayoutConstraint.activate([
+                errorView.topAnchor.constraint(equalTo: view.topAnchor),
+                errorView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                errorView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                errorView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            ])
+        }
+    }
+    
+    private func configureIndicatorView() {
+        if dataIsLoaded {
+            loadIndicator.stopAnimating()
+            loadIndicator.removeFromSuperview()
+        } else {
+            scrollView.addSubview(loadIndicator)
+            loadIndicator.startAnimating()
+            NSLayoutConstraint.activate([
+                loadIndicator.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+                loadIndicator.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor)
+            ])
+        }
     }
 }
 
