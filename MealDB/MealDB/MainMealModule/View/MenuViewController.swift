@@ -82,7 +82,7 @@ final class MenuViewController: UIViewController {
             headerView.heightAnchor.constraint(equalToConstant: 220),
             headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -4),
             headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -97.5),
-            headerView.topAnchor.constraint(equalTo: view.topAnchor, constant: -20),
+            headerView.topAnchor.constraint(equalTo: view.topAnchor, constant: -35),
             
             titleLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 80),
             titleLabel.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 70),

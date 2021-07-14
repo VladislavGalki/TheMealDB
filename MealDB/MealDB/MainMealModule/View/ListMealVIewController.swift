@@ -132,7 +132,7 @@ final class ListMealVIewController: UIViewController {
             headerView.heightAnchor.constraint(equalToConstant: 220),
             headerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             headerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            headerView.topAnchor.constraint(equalTo: view.topAnchor, constant: -20),
+            headerView.topAnchor.constraint(equalTo: view.topAnchor, constant: -35),
             
             buttonMenu.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             buttonMenu.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
