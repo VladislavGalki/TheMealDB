@@ -125,7 +125,7 @@ final class LaunchScreenView: UIViewController {
 
 //MARK: - LaunchScreenViewProtocol
 extension LaunchScreenView: LaunchScreenViewProtocol {
-    func presentAnimationUser(is userNameExist: Bool, userName: String) {
+    func presentUserWithAnimation(is userNameExist: Bool, userName: String) {
         presentationWithAnimation(userNameExist: userNameExist, userName: userName)
     }
 }

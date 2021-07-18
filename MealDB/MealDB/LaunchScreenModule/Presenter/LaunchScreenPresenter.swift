@@ -8,7 +8,7 @@
 import Foundation
 
 protocol LaunchScreenViewProtocol: AnyObject {
-    func presentAnimationUser(is userNameExist: Bool, userName: String)
+    func presentUserWithAnimation(is userNameExist: Bool, userName: String)
 }
 
 protocol LaunchScreenPresenterProtocol: AnyObject {
@@ -35,9 +35,9 @@ final class LaunchScreenPresenter: LaunchScreenPresenterProtocol {
     
     func getUserName() {
         if let userName = UserDefaults.standard.object(forKey: userNameKey) {
-            view?.presentAnimationUser(is: true, userName: (userName as! String))
+            view?.presentUserWithAnimation(is: true, userName: (userName as! String))
         }else {
-            view?.presentAnimationUser(is: false, userName: "")
+            view?.presentUserWithAnimation(is: false, userName: "")
         }
     }
     

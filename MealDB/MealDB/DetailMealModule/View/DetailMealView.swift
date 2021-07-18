@@ -34,6 +34,7 @@ class DetailMealView: UIViewController {
     }()
     let mealImageView: UIImageView = {
         let mealImage = UIImageView()
+        mealImage.contentMode = .scaleAspectFill
         mealImage.backgroundColor = UIColor(red: 224/255, green: 234/255, blue: 245/255, alpha: 1)
         mealImage.translatesAutoresizingMaskIntoConstraints = false
         mealImage.layer.masksToBounds = true

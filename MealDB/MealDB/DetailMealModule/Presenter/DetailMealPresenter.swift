@@ -5,7 +5,6 @@
 //  Created by Владислав Галкин on 22.06.2021.
 //
 
-import Foundation
 import UIKit
 
 protocol DetailMealViewProtocol: AnyObject {
@@ -74,8 +73,10 @@ final class DetailMealPresenter: DetailMealPresenterProtocol {
                 self.downloadImage = image
                 group.leave()
             }
+            
             group.wait()
-            return DetailMealViewModel(id: item.idMeal, nameMeal: item.strMeal, strMealImage: item.strMealThumb, mealImage: downloadImage, instructions: item.strInstructions ?? "", youtubeVideo: item.strYoutube ?? "")
+            let resizebleImage = downloadImage?.imageResized(to: CGSize(width: 400, height: 400))
+            return DetailMealViewModel(id: item.idMeal, nameMeal: item.strMeal, strMealImage: item.strMealThumb, mealImage: resizebleImage, instructions: item.strInstructions ?? "", youtubeVideo: item.strYoutube ?? "")
         }
         DispatchQueue.global().async {
             self.coreDataService.create(detailMealModel: self.detailMealViewModel)
@@ -96,7 +97,8 @@ final class DetailMealPresenter: DetailMealPresenterProtocol {
             }
             
             group.wait()
-            return DetailMealViewModel(id: item.id, nameMeal: item.nameMeal, strMealImage: item.strMealImage, mealImage: downloadImage, instructions: item.instructions, youtubeVideo: item.youtubeVideo)
+            let resizebleImage = downloadImage?.imageResized(to: CGSize(width: 400, height: 400))
+            return DetailMealViewModel(id: item.id, nameMeal: item.nameMeal, strMealImage: item.strMealImage, mealImage: resizebleImage, instructions: item.instructions, youtubeVideo: item.youtubeVideo)
         }
     }
     
@@ -105,5 +107,14 @@ final class DetailMealPresenter: DetailMealPresenterProtocol {
         if !urlPath.isEmpty {
             router?.showVideoMealController(videoUrlPath: urlPath)
         }
+    }
+    
+    private func resizeImage() -> UIImage {
+        let scaledImageSize = CGSize(width: 350, height: 180)
+        let render = UIGraphicsImageRenderer(size: scaledImageSize)
+        let scaledImage = render.image { _ in
+            downloadImage?.draw(in: CGRect(origin: .zero, size: scaledImageSize))
+        }
+        return scaledImage
     }
 }
