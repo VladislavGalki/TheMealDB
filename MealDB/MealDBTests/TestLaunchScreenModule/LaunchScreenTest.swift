@@ -8,6 +8,14 @@
 import XCTest
 @testable import MealDB
 
+class MockUserDefaults {
+    
+    static let standart = MockUserDefaults()
+    private init() {}
+    
+    
+}
+
 class MockViewLaunch: LaunchScreenViewProtocol {
     func presentUserWithAnimation(is userNameExist: Bool, userName: String) {
     }
@@ -21,6 +29,7 @@ class LaunchScreenTest: XCTestCase {
     var presenter: LaunchScreenPresenter!
     var router: RouterProtocol!
     var coreDataStack: CoreDataStack!
+    var userDefaults: UserDefaults!
     var userNameKey: String!
     
     override func setUpWithError() throws {
@@ -40,13 +49,15 @@ class LaunchScreenTest: XCTestCase {
         presenter = nil
         router = nil
         coreDataStack = nil
+        userDefaults = nil
     }
     
     func testThatUserNameIsSaved() {
-        presenter.saveUserName(for: "Foo")
+        let user = "Foo"
+        presenter.saveUserName(for: user)
+
+        let userName = (UserDefaults.standard.object(forKey: userNameKey) as! String)
         
-        let userName = UserDefaults.standard.object(forKey: userNameKey)
-        
-        XCTAssertNotNil(userName, "UserName not nil")
+        XCTAssertEqual(user, userName)
     }
 }
