@@ -41,7 +41,7 @@ extension VideoMealView: VideoMealViewProtocol {
     }
     
     func failure(error: Error) {
-        
+        print(error.localizedDescription)
     }
 }
 

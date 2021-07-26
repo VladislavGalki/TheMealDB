@@ -10,14 +10,13 @@ import UIKit
 final class MealTableViewCell: UITableViewCell {
     
     static let identifier = "MealCell"
+    static let labelFont = UIFont(name: "Kefa", size: 20)!
     
     lazy var loadingIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView()
         indicator.translatesAutoresizingMaskIntoConstraints = false
         return indicator
     }()
-    
-    static let labelFont = UIFont(name: "Kefa", size: 20)!
     
     let backView: UIView = {
         let backView = UIView(frame: .zero)

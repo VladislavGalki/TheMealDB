@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PanelTransition: NSObject, UIViewControllerTransitioningDelegate {
+final class PanelTransition: NSObject, UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         return PresentationController(presentedViewController: presented, presenting: presenting ?? source)
     }

@@ -20,7 +20,7 @@ protocol RouterProtocol: RouterMain {
 }
 
 final class Router: RouterProtocol {
-
+    
     var navigationController: UINavigationController?
     var assemblyBuilder: AssemblyBuilderProtocol?
     

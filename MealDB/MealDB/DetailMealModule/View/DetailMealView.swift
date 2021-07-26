@@ -7,12 +7,12 @@
 
 import UIKit
 
-class DetailMealView: UIViewController {
+final class DetailMealView: UIViewController {
     
     // MARK: - Dependencies
     
     var presenter: DetailMealPresenterProtocol!
-   
+    
     // MARK: - UI
     let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -62,7 +62,7 @@ class DetailMealView: UIViewController {
     }()
     
     let watchVideoButton: UIButton = {
-       let button = UIButton()
+        let button = UIButton()
         button.setTitle("(watch video)", for: .normal)
         button.setTitleColor(.blue, for: .normal)
         button.isHidden = true
@@ -79,7 +79,7 @@ class DetailMealView: UIViewController {
     }()
     
     let loadIndicator: UIActivityIndicatorView = {
-       let indicator = UIActivityIndicatorView()
+        let indicator = UIActivityIndicatorView()
         indicator.style = .large
         indicator.translatesAutoresizingMaskIntoConstraints = false
         return indicator

@@ -61,10 +61,10 @@ final class ContainerViewController: UIViewController {
     }
     
     private func configureMenuController() {
-            view.insertSubview(menuView.view, at: 0)
-            addChild(menuView)
-            menuView.didMove(toParent: self)
-            menuView.delegate = self
+        view.insertSubview(menuView.view, at: 0)
+        addChild(menuView)
+        menuView.didMove(toParent: self)
+        menuView.delegate = self
     }
     
     private func destroyMenuController(){
@@ -72,7 +72,7 @@ final class ContainerViewController: UIViewController {
         menuView.view.removeFromSuperview()
         menuView.removeFromParent()
     }
-
+    
     private func animateStatusBar() {
         UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
             self.setNeedsStatusBarAppearanceUpdate()

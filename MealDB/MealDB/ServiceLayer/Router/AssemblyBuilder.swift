@@ -16,13 +16,13 @@ protocol AssemblyBuilderProtocol {
 }
 
 final class AssemblyBuilder: AssemblyBuilderProtocol {
-
+    
     var coreDataStack: CoreDataStack
     
     init(coreDataStack: CoreDataStack) {
         self.coreDataStack = coreDataStack
     }
-
+    
     func createLaunchScreenModule(router: RouterProtocol) -> UIViewController {
         let controller = LaunchScreenView()
         let presenter = LaunchScreenPresenter(view: controller, router: router)
@@ -30,7 +30,7 @@ final class AssemblyBuilder: AssemblyBuilderProtocol {
         return controller
     }
     
-     func createMainModule(router: RouterProtocol) -> UIViewController {
+    func createMainModule(router: RouterProtocol) -> UIViewController {
         let mealListView = ListMealVIewController()
         let menuView = MenuViewController()
         let networkService = MealNetworkService()

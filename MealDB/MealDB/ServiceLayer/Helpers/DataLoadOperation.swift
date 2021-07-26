@@ -10,7 +10,7 @@ import UIKit.UIImage
 
 let cacheModel = NSCache<AnyObject, AnyObject>()
 
-class DataLoadOperation: Operation {
+final class DataLoadOperation: Operation {
     
     let networkService: MealNetworkServiceProtocol = MealNetworkService()
     var mealModel: MealViewModel?

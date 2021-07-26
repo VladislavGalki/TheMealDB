@@ -19,7 +19,7 @@ final class MealNetworkService {
 }
 
 extension MealNetworkService: MealNetworkServiceProtocol {
-
+    
     typealias Handler = (Data?, URLResponse?, Error?) -> Void
     
     func getPopularMeal(completion: @escaping (GetMealAPIResponse) -> Void) {
@@ -70,7 +70,7 @@ extension MealNetworkService: MealNetworkServiceProtocol {
     }
     
     func getMealById(with id: String, completion: @escaping (GetMealDetailAPIResponse) -> Void) {
-       
+        
         var components = URLComponents(string: Constants.MealAPIMethods.getMealById)
         components?.queryItems = [URLQueryItem(name: "i", value: id)]
         guard let url = components?.url else { completion(.failure(.unknownError)); return }

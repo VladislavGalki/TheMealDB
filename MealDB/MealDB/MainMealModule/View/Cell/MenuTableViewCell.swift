@@ -13,7 +13,7 @@ final class MenuTableViewCell: UITableViewCell {
     static let identifier = "MenuCell"
     
     lazy var mealNameLabel: UILabel = {
-       let mealNameLabel = UILabel()
+        let mealNameLabel = UILabel()
         mealNameLabel.font = UIFont(name: "Kefa", size: 20)
         mealNameLabel.textAlignment = .left
         mealNameLabel.translatesAutoresizingMaskIntoConstraints = false

@@ -18,7 +18,7 @@ final class ErrorHelperView: UIView {
     //MARK: - UI
     
     let errorTextLabel: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.font = UIFont(name: "Kefa", size: 25)
         label.text = "Error, please try again"
         label.textAlignment = .center
@@ -27,7 +27,7 @@ final class ErrorHelperView: UIView {
     }()
     
     let refreshDataButton: UIButton = {
-       let button = UIButton()
+        let button = UIButton()
         button.setImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
         button.setTitleColor(.blue, for: .normal)
         button.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 20), forImageIn: .normal)

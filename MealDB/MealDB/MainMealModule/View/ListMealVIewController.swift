@@ -79,7 +79,7 @@ final class ListMealVIewController: UIViewController {
     }()
     
     let loadIndicator: UIActivityIndicatorView = {
-       let indicator = UIActivityIndicatorView()
+        let indicator = UIActivityIndicatorView()
         indicator.style = .large
         indicator.translatesAutoresizingMaskIntoConstraints = false
         return indicator
